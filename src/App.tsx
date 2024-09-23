@@ -1,13 +1,12 @@
-import { Link } from "react-router-dom";
-import "./App.css";
+import { Outlet } from "react-router-dom";
+import Layout from "./containers/layout";
 
-function App() {
+const App = () => {
     return (
-        <div>
-            <div>Data structure practice</div>
-            <Link to={"/array"}>Array</Link>
-        </div>
+        <Layout>
+            <Outlet />
+        </Layout>
     );
-}
+};
 
 export default App;

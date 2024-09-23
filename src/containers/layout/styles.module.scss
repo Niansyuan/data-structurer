@@ -1,0 +1,20 @@
+.main {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    box-sizing: border-box;
+    padding-left: 300px;
+}
+
+.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: calc(1vh * 100);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff11;
+    box-sizing: border-box;
+}
