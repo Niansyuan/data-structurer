@@ -53,12 +53,6 @@ export default tseslint.config(
             "eqeqeq": ["error", "always"],
             "react-hooks/rules-of-hooks": "error",
             "react-hooks/exhaustive-deps": "error",
-            "import/no-unresolved": [
-                "error",
-                {
-                    "ignore": ["server-only"]
-                }
-            ]
         },
     },
 )

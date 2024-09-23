@@ -1,6 +1,9 @@
 const ComponentArray=()=>{
     return (
-        <div>Chapter Array</div>
+        <div>
+            <h1>Chapter Array</h1>
+        </div>
+
     );
 };
 
