@@ -43,4 +43,13 @@
         background-color: #ffffff;
         color: #00000088;
     }
+
+    &.cube-new {
+        background-color: #FE7430;
+        cursor: default;
+    }
+}
+
+button {
+    width: 100px;
 }

@@ -2,10 +2,17 @@ import classNames from "classnames";
 import { useState } from "react";
 import styles from "./styles.module.scss";
 
+const UPDATE_NUMBER = 0;
+const UPDATE_INDEX = 2;
+
 const ContainerArray = () => {
     const [accessCubeIndex, setAccessCubeIndex] = useState(-1);
     const [searchCubeIndex, setSearchCubeValue] = useState(-1);
-    const array = [1, 2, 3, 4, 5];
+    const staticArray = [1, 2, 3, 4, 5];
+    const [array, setArray] = useState<Array<number>>(staticArray);
+    const [insertArray, setInsertArray] = useState<Array<number>>([]);
+    const [updatedArray, setUpdatedArray] =
+        useState<Array<number>>(staticArray);
 
     const handleAccessInputOnChange = (
         e: React.ChangeEvent<HTMLInputElement>
@@ -17,10 +24,29 @@ const ContainerArray = () => {
         setSearchCubeValue(index);
     };
 
-    const handleInsertInputOnChange = (
-        e: React.ChangeEvent<HTMLInputElement>
-    ): void => {
-        array.push(Number(e.target.value));
+    const handleClickInsert = (value: number, index: number) => {
+        const poppedArray = [...array];
+        poppedArray.splice(index, 1);
+        setArray(poppedArray);
+
+        const newArray = [...insertArray];
+        newArray.push(value);
+        setInsertArray(newArray);
+    };
+
+    const handleReload = () => {
+        setArray(staticArray);
+        setInsertArray([]);
+    };
+
+    const handleReloadUpdate = () => {
+        setUpdatedArray(staticArray);
+    };
+
+    const handleUpdate = () => {
+        const newArray = [...updatedArray];
+        newArray[UPDATE_INDEX] = UPDATE_NUMBER;
+        setUpdatedArray(newArray);
     };
 
     return (
@@ -39,7 +65,7 @@ const ContainerArray = () => {
                     <span>]</span>
                 </div>
                 <div className={styles["cube-wrapper"]}>
-                    {array.map((item, index) => {
+                    {staticArray.map((item, index) => {
                         return (
                             <div
                                 className={classNames(styles["cube"], {
@@ -65,7 +91,7 @@ const ContainerArray = () => {
                     <div> Output: {searchCubeIndex}</div>
                 </div>
                 <div className={styles["cube-wrapper"]}>
-                    {array.map((item, index) => {
+                    {staticArray.map((item, index) => {
                         return (
                             <div
                                 className={classNames(styles["cube"], {
@@ -84,26 +110,70 @@ const ContainerArray = () => {
                 </div>
             </section>
             <section className={styles["section"]}>
-                <h3>Insert</h3>
+                <h3>Insert & Delete</h3>
+                <button onClick={handleReload}>Reload</button>
                 <div className={styles["wrapper-row"]}>
-                    <span> array.push(</span>
-                    <input type="number" onChange={handleInsertInputOnChange} />
-                    <span>)</span>
+                    <span> array.splice()</span>
+                    <div className={styles["cube-wrapper"]}>
+                        {array.map((item, index) => {
+                            return (
+                                <div
+                                    className={classNames(styles["cube"])}
+                                    key={item}
+                                    onClick={() => {
+                                        return handleClickInsert(item, index);
+                                    }}
+                                >
+                                    {item}
+                                </div>
+                            );
+                        })}
+                    </div>
                 </div>
-                <div className={styles["cube-wrapper"]}>
-                    {array.map((item, index) => {
-                        return (
-                            <div
-                                className={classNames(styles["cube"], {
-                                    [styles["cube-selected"]]:
-                                        index === searchCubeIndex
-                                })}
-                                key={item}
-                            >
-                                {item}
-                            </div>
-                        );
-                    })}
+                <div className={styles["wrapper-row"]}>
+                    <span> array.push()</span>
+                    <div className={styles["cube-wrapper"]}>
+                        {insertArray.map((item, index) => {
+                            return (
+                                <div
+                                    className={classNames(
+                                        styles["cube"],
+                                        styles["cube-new"]
+                                    )}
+                                    key={`insert ${index}`}
+                                >
+                                    {item}
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            </section>
+            <section className={styles["section"]}>
+                <h3>Update</h3>
+                <div className={styles["wrapper-row"]}>
+                    <button onClick={handleReloadUpdate}>Reload</button>
+                    <button onClick={handleUpdate}>Update</button>
+                </div>
+                <div className={styles["wrapper-row"]}>
+                    <span>array[{UPDATE_INDEX}]</span>
+                    <span>=</span>
+                    <span>{UPDATE_NUMBER}</span>
+                    <div className={styles["cube-wrapper"]}>
+                        {updatedArray.map((item, index) => {
+                            return (
+                                <div
+                                    className={classNames(styles["cube"], {
+                                        [styles["cube-selected"]]:
+                                            index === UPDATE_INDEX
+                                    })}
+                                    key={item}
+                                >
+                                    {item}
+                                </div>
+                            );
+                        })}
+                    </div>
                 </div>
             </section>
         </div>
