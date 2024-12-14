@@ -138,6 +138,7 @@ const ContainerLinkedList = () => {
             <div className={styles["controls"]}>
                 <input
                     type="text"
+                    className={styles["input"]}
                     value={inputValue}
                     onChange={(e) => {
                         return setInputValue(e.target.value);
